@@ -1,16 +1,12 @@
 {
   "ai": {
-    "provider": "deepseek",
-    "model": "deepseek-v4-flash",
-    "base_url": "https://api.deepseek.com",
-    "api_key_env": "DEEPSEEK_API_KEY",
+    "provider": "gemini",
+    "model": "gemini-2.0-flash",
+    "api_key_env": "GOOGLE_API_KEY",
     "temperature": 0.3,
     "max_tokens": 8192,
     "throttle_sec": 1,
-    "languages": [
-      "zh",
-      "en"
-    ],
+    "languages": ["zh", "en"],
     "analysis_concurrency": 5,
     "enrichment_concurrency": 5
   },
@@ -18,196 +14,54 @@
     "profiles_dir": "profiles",
     "default_profile": "tech-news",
     "profile_settings": {
-      "tech-news": {
-        "threshold": 7.0,
-        "topic_dedup": true
-      },
-      "tech-blog": {
-        "threshold": 4.0,
-        "topic_dedup": false
-      },
-      "finance-news": {
-        "threshold": 7.0,
-        "topic_dedup": true
-      }
+      "tech-news": {"threshold": 7.0, "topic_dedup": true},
+      "tech-blog": {"threshold": 4.0, "topic_dedup": false},
+      "finance-news": {"threshold": 7.0, "topic_dedup": true}
     }
   },
   "sources": {
     "github": [
-      {
-        "type": "user_events",
-        "username": "karpathy",
-        "enabled": true,
-        "profile": "tech-news"
-      },
-      {
-        "type": "repo_releases",
-        "owner": "vllm-project",
-        "repo": "vllm",
-        "enabled": true,
-        "profile": "tech-news"
-      },
-      {
-        "type": "repo_releases",
-        "owner": "sgl-project",
-        "repo": "sglang",
-        "enabled": true,
-        "profile": "tech-news"
-      },
-      {
-        "type": "repo_releases",
-        "owner": "triton-lang",
-        "repo": "triton",
-        "enabled": true,
-        "profile": "tech-news"
-      }
+      {"type": "user_events", "username": "karpathy", "enabled": false, "profile": "tech-news"},
+      {"type": "repo_releases", "owner": "vllm-project", "repo": "vllm", "enabled": false, "profile": "tech-news"},
+      {"type": "repo_releases", "owner": "sgl-project", "repo": "sglang", "enabled": false, "profile": "tech-news"},
+      {"type": "repo_releases", "owner": "triton-lang", "repo": "triton", "enabled": false, "profile": "tech-news"}
     ],
-    "hackernews": {
-      "enabled": true,
-      "fetch_top_stories": 30,
-      "min_score": 150,
-      "profile": "tech-news"
-    },
+    "hackernews": {"enabled": false, "fetch_top_stories": 30, "min_score": 150, "profile": "tech-news"},
     "rss": [
-      {
-        "name": "Simon Willison",
-        "url": "https://simonwillison.net/atom/everything/",
-        "enabled": true,
-        "category": "ai-tools",
-        "profile": "tech-news"
-      },
-      {
-        "name": "vLLM Blog",
-        "url": "https://vllm.ai/blog/rss.xml",
-        "enabled": true,
-        "category": "llm-inference",
-        "profile": "tech-blog",
-        "content_extractor": "trafilatura"
-      },
-      {
-        "name": "Sean Goedecke",
-        "url": "https://www.seangoedecke.com/rss.xml",
-        "enabled": true,
-        "category": "software-engineering",
-        "profile": "tech-blog",
-        "content_extractor": "trafilatura"
-      },
-      {
-        "name": "CNBC Finance",
-        "url": "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10000664",
-        "enabled": true,
-        "category": "finance",
-        "profile": "finance-news",
-        "content_extractor": "trafilatura"
-      },
-      {
-        "name": "GitHub Trending - Daily",
-        "url": "https://mshibanami.github.io/GitHubTrendingRSS/daily/all.xml",
-        "enabled": true,
-        "category": "github-trending",
-        "profile": "tech-news"
-      },
-      {
-        "name": "Semianalysis",
-        "url": "https://newsletter.semianalysis.com/feed",
-        "enabled": true,
-        "category": "semiconductors",
-        "profile": "tech-news"
-      },
-      {
-        "name": "LWN.net",
-        "url": "https://lwn.net/headlines/full_text?key=${LWN_KEY}",
-        "enabled": true,
-        "category": "linux-kernel",
-        "profile": "tech-news"
-      }
+      {"name": "AP 美联社 (Google News)", "url": "https://news.google.com/rss/search?q=site%3Aapnews.com&hl=en-US&gl=US&ceid=US%3Aen", "enabled": true, "category": "国际形势", "profile": "tech-news"},
+      {"name": "Reuters 路透社 (Google News)", "url": "https://news.google.com/rss/search?q=site%3Areuters.com&hl=en-US&gl=US&ceid=US%3Aen", "enabled": true, "category": "国际形势", "profile": "tech-news"},
+      {"name": "AFP 法新社 (Google News)", "url": "https://news.google.com/rss/search?q=%22Agence+France-Presse%22&hl=en-US&gl=US&ceid=US%3Aen", "enabled": true, "category": "国际形势", "profile": "tech-news"},
+      {"name": "BBC World", "url": "https://feeds.bbci.co.uk/news/world/rss.xml", "enabled": true, "category": "国际形势", "profile": "tech-news"},
+      {"name": "Bloomberg Politics", "url": "https://feeds.bloomberg.com/politics/news.rss", "enabled": true, "category": "国际形势", "profile": "tech-news"},
+      {"name": "CNN Top Stories", "url": "http://rss.cnn.com/rss/cnn_topstories.rss", "enabled": true, "category": "美国", "profile": "tech-news"},
+      {"name": "NBC News", "url": "https://feeds.nbcnews.com/nbcnews/public/news", "enabled": true, "category": "美国", "profile": "tech-news"},
+      {"name": "ABC News Top Stories", "url": "https://abcnews.go.com/abcnews/topstories", "enabled": true, "category": "美国", "profile": "tech-news"},
+      {"name": "CBS News", "url": "https://www.cbsnews.com/latest/rss/main", "enabled": true, "category": "美国", "profile": "tech-news"},
+      {"name": "New York Times World", "url": "https://rss.nytimes.com/services/xml/rss/nyt/World.xml", "enabled": true, "category": "美国", "profile": "tech-news"},
+      {"name": "Washington Post World", "url": "https://feeds.washingtonpost.com/rss/world", "enabled": true, "category": "美国", "profile": "tech-news"},
+      {"name": "Wall Street Journal World", "url": "https://feeds.content.dowjones.io/public/rss/RSSWorldNews", "enabled": true, "category": "美国", "profile": "tech-news"},
+      {"name": "Los Angeles Times World-Nation", "url": "https://www.latimes.com/world-nation/rss2.0.xml", "enabled": true, "category": "美国", "profile": "tech-news"},
+      {"name": "Fox News World", "url": "https://moxie.foxnews.com/google-publisher/world.xml", "enabled": true, "category": "美国", "profile": "tech-news"},
+      {"name": "The Guardian World", "url": "https://www.theguardian.com/world/rss", "enabled": true, "category": "欧洲", "profile": "tech-news"},
+      {"name": "Financial Times", "url": "https://www.ft.com/rss/home", "enabled": true, "category": "欧洲", "profile": "tech-news"},
+      {"name": "The Economist International", "url": "https://www.economist.com/international/rss.xml", "enabled": true, "category": "欧洲", "profile": "tech-news"},
+      {"name": "The Times 泰晤士报 (Google News)", "url": "https://news.google.com/rss/search?q=site%3Athetimes.co.uk&hl=en-GB&gl=GB&ceid=GB%3Aen", "enabled": true, "category": "欧洲", "profile": "tech-news"},
+      {"name": "Le Monde International", "url": "https://www.lemonde.fr/international/rss_full.xml", "enabled": true, "category": "欧洲", "profile": "tech-news"},
+      {"name": "Der Spiegel International", "url": "https://www.spiegel.de/international/index.rss", "enabled": true, "category": "欧洲", "profile": "tech-news"},
+      {"name": "Kyodo News 共同社 (Google News)", "url": "https://news.google.com/rss/search?q=site%3Aenglish.kyodonews.net&hl=en-US&gl=US&ceid=US%3Aen", "enabled": true, "category": "亚洲", "profile": "tech-news"},
+      {"name": "SCMP 南华早报", "url": "https://www.scmp.com/rss/91/feed", "enabled": true, "category": "中国", "profile": "tech-news"},
+      {"name": "Al Jazeera 半岛电视台", "url": "https://www.aljazeera.com/xml/rss/all.xml", "enabled": true, "category": "中东", "profile": "tech-news"},
+      {"name": "专题-台湾 EN (Google News)", "url": "https://news.google.com/rss/search?q=Taiwan+strait&hl=en-US&gl=US&ceid=US%3Aen", "enabled": true, "category": "台湾", "profile": "tech-news"},
+      {"name": "专题-台湾 ZH (Google News)", "url": "https://news.google.com/rss/search?q=%E5%8F%B0%E6%B9%BE&hl=zh-CN&gl=CN&ceid=CN%3Azh-Hans", "enabled": true, "category": "台湾", "profile": "tech-news"},
+      {"name": "专题-俄乌 EN (Google News)", "url": "https://news.google.com/rss/search?q=Ukraine+Russia+war&hl=en-US&gl=US&ceid=US%3Aen", "enabled": true, "category": "俄乌战争", "profile": "tech-news"},
+      {"name": "专题-俄乌 ZH (Google News)", "url": "https://news.google.com/rss/search?q=%E4%BF%84%E4%B9%8C%E6%88%98%E4%BA%89&hl=zh-CN&gl=CN&ceid=CN%3Azh-Hans", "enabled": true, "category": "俄乌战争", "profile": "tech-news"},
+      {"name": "专题-中东 EN (Google News)", "url": "https://news.google.com/rss/search?q=Middle+East+Israel+Gaza&hl=en-US&gl=US&ceid=US%3Aen", "enabled": true, "category": "中东", "profile": "tech-news"},
+      {"name": "专题-中东 ZH (Google News)", "url": "https://news.google.com/rss/search?q=%E4%B8%AD%E4%B8%9C+%E4%BB%A5%E8%89%B2%E5%88%97&hl=zh-CN&gl=CN&ceid=CN%3Azh-Hans", "enabled": true, "category": "中东", "profile": "tech-news"}
     ],
-    "reddit": {
-      "enabled": true,
-      "subreddits": [
-        {
-          "subreddit": "MachineLearning",
-          "enabled": true,
-          "sort": "hot",
-          "time_filter": "day",
-          "fetch_limit": 10,
-          "min_score": 60,
-          "profile": "tech-news"
-        },
-        {
-          "subreddit": "LocalLLaMA",
-          "enabled": true,
-          "sort": "hot",
-          "time_filter": "day",
-          "fetch_limit": 10,
-          "min_score": 60,
-          "profile": "tech-news"
-        }
-      ],
-      "users": [],
-      "fetch_comments": 10
-    },
-    "telegram": {
-      "enabled": true,
-      "channels": [
-        {
-          "channel": "zaihuapd",
-          "enabled": true,
-          "fetch_limit": 20,
-          "profile": ["tech-news", "finance-news"]
-        }
-      ]
-    }
+    "reddit": {"enabled": false, "subreddits": [{"subreddit": "MachineLearning", "enabled": true, "sort": "hot", "time_filter": "day", "fetch_limit": 10, "min_score": 60, "profile": "tech-news"}, {"subreddit": "LocalLLaMA", "enabled": true, "sort": "hot", "time_filter": "day", "fetch_limit": 10, "min_score": 60, "profile": "tech-news"}], "users": [], "fetch_comments": 10},
+    "telegram": {"enabled": false, "channels": [{"channel": "zaihuapd", "enabled": true, "fetch_limit": 20, "profile": ["tech-news", "finance-news"]}]}
   },
-  "collection": {
-    "time_window_hours": 24
-  },
-  "digest": {
-    "max_items": null,
-    "profile_order": [
-      "tech-news",
-      "tech-blog",
-      "finance-news"
-    ],
-    "category_groups": {},
-    "default_group": "other",
-    "default_group_limit": null
-  },
-  "webhook": {
-    "enabled": true,
-    "url_env": "HORIZON_WEBHOOK_URL",
-    "delivery": "summary_and_items",
-    "overview_position": "last",
-    "platform": "feishu",
-    "layout": "collapsible",
-    "fallback_layout": "markdown",
-    "languages": [
-      "zh"
-    ],
-    "request_body": {
-      "msg_type": "interactive",
-      "card": {
-        "schema": "2.0",
-        "config": {
-          "wide_screen_mode": true
-        },
-        "header": {
-          "title": {
-            "tag": "plain_text",
-            "content": "#{message_title}"
-          },
-          "template": "blue"
-        },
-        "body": {
-          "elements": [
-            {
-              "tag": "markdown",
-              "content": "#{summary}"
-            }
-          ]
-        }
-      }
-    },
-    "headers": ""
-  }
+  "collection": {"time_window_hours": 24},
+  "digest": {"max_items": null, "profile_order": ["tech-news", "tech-blog", "finance-news"], "category_groups": {}, "default_group": "other", "default_group_limit": null},
+  "webhook": {"enabled": false, "url_env": "HORIZON_WEBHOOK_URL", "delivery": "summary_and_items", "overview_position": "last", "platform": "feishu", "layout": "collapsible", "fallback_layout": "markdown", "languages": ["zh"], "request_body": {"msg_type": "interactive", "card": {"schema": "2.0", "config": {"wide_screen_mode": true}, "header": {"title": {"tag": "plain_text", "content": "#{message_title}"}, "template": "blue"}, "body": {"elements": [{"tag": "markdown", "content": "#{summary}"}]}}}, "headers": ""}
 }
