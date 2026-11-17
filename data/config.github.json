@@ -1,14 +1,14 @@
 {
   "ai": {
     "provider": "gemini",
-    "model": "gemini-2.0-flash",
+    "model": "gemini-3.8-flash",
     "api_key_env": "GOOGLE_API_KEY",
     "temperature": 0.3,
     "max_tokens": 8192,
-    "throttle_sec": 1,
+    "throttle_sec": 4,
     "languages": ["zh", "en"],
-    "analysis_concurrency": 5,
-    "enrichment_concurrency": 5
+    "analysis_concurrency": 1,
+    "enrichment_concurrency": 1
   },
   "processing": {
     "profiles_dir": "profiles",
